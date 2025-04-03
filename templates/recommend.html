@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Book Recommender System</title>
+
+    <!-- Latest Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    
+    <style>
+        /* 🔵 Dark Theme with Gold Highlights */
+        body {
+            background-color: #0a192f;
+            color: white;
+            font-family: 'Arial', sans-serif;
+        }
+
+        /* 📚 Navbar Styling */
+        .navbar {
+            background-color: #112240 !important;
+            padding: 10px;
+        }
+
+        .navbar-brand {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: #FFD700 !important;
+        }
+
+        .nav-link {
+            color: #ccd6f6 !important;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .nav-link:hover {
+            color: #FFD700 !important;
+        }
+
+        /* 📖 Book Cards */
+        .card {
+            background-color: #112240;
+            border: 1px solid #FFD700;
+            border-radius: 10px;
+            padding: 15px;
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.3);
+        }
+
+        .card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 10px;
+            border: 2px solid #FFD700;
+        }
+
+        /* 🏷️ Text Styling */
+        h5, p {
+            color: #ccd6f6;
+        }
+
+        .text-gold {
+            color: #FFD700 !important;
+        }
+
+        /* 🔎 Recommendation Form */
+        .recommend-form {
+            background-color: #112240;
+            padding: 20px;
+            border-radius: 10px;
+            border: 2px solid #FFD700;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(255, 215, 0, 0.2);
+        }
+
+        .form-control {
+            background-color: #0a192f;
+            color: white;
+            border: 1px solid #FFD700;
+        }
+
+        .btn-gold {
+            background-color: #FFD700;
+            color: black;
+            font-weight: bold;
+            border-radius: 5px;
+            transition: 0.3s;
+        }
+
+        .btn-gold:hover {
+            background-color: #ccac00;
+        }
+
+        /* 🚨 Error Message */
+        .error-message {
+            background-color: rgba(255, 0, 0, 0.2);
+            color: #ff4d4d;
+            padding: 10px;
+            text-align: center;
+            border-radius: 5px;
+            font-weight: bold;
+            margin-top: 20px;
+        }
+
+        /* 🔻 Footer */
+        .footer {
+            background-color: #112240;
+            color: #ccd6f6;
+            text-align: center;
+            padding: 15px 0;
+            margin-top: 50px;
+            font-size: 14px;
+            border-top: 2px solid #FFD700;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- 🔵 Navbar -->
+    <nav class="navbar navbar-expand-lg">
+        <div class="container">
+            <a class="navbar-brand" href="#">📖 My Book Recommender</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="/">🏠 Home</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/recommend">🔍 Recommend</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">📩 Contact</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 🔎 Recommendation Form -->
+    <div class="container mt-5">
+        <h1 class="text-gold text-center" style="font-size:50px">🔎 Recommend Books</h1>
+        
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <form action="/recommend_books" method="post" class="recommend-form mt-4">
+                    <input name="user_input" type="text" class="form-control" placeholder="Enter a book name..."><br>
+                    <button type="submit" class="btn btn-gold btn-lg">Get Recommendations</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- 📚 Recommended Books -->
+        {% if data==None %}
+           
+                <!-- 🚨 Show Error if No Books Found -->
+                <div class="error-message">❌ Invalid book name. Please try again!</div>
+                {% endif %}
+        {% if data != None %}
+                <div class="row mt-5">
+                    {% for i in data %}
+                        <div class="col-lg-3 col-md-4 col-sm-6 mb-4">
+                            <div class="card">
+                                <img class="card-img-top" src="{{ i[2] }}" alt="Book Image">
+                                <div class="card-body">
+                                    <h5 class="text-gold">{{ i[0] }}</h5>
+                                    <p class="text-muted">✍️ {{ i[1] }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            
+        {% endif %}
+    </div>
+
+    <!-- 🔻 Footer -->
+    <footer class="footer">
+        <p>🚀 Made with ❤️ by <strong>Meet Sohani</strong></p>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
